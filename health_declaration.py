@@ -12,10 +12,12 @@ VAFS_CLIENT_ID = os.getenv('VAFS_CLIENT_ID')
 
 
 def get_date():
+    # returns current date in specified format
     return datetime.today().strftime("%d/%m/%Y")
 
 
 def get_period():
+    # returns whether it is AM or PM  based on current time
     if int(datetime.today().strftime("%H")) >= 12:
         return "P"
 
@@ -24,8 +26,10 @@ def get_period():
 
 def login_to_page():
 
+    # temp declaration login page URL
     url = "https://vafs.nus.edu.sg/adfs/oauth2/authorize"
 
+    # params for login page
     params = {
         "response_type": "code",
         "client_id": VAFS_CLIENT_ID,
@@ -33,6 +37,7 @@ def login_to_page():
         "redirect_uri": "https://myaces.nus.edu.sg:443/htd/htd"
     }
 
+    # authentication info
     login_info = {"AuthMethod": "FormsAuthentication",
                   "UserName": "nusstu\\" + USERNAME,
                   "Password": PASSWORD,
@@ -49,9 +54,13 @@ def login_to_page():
 
 def submit_declaration(cookie):
 
+    # temp declaraion URL
     url = "https://myaces.nus.edu.sg/htd/htd"
+
+    # session cookie
     cookie = {"JSESSIONID": cookie}
 
+    # temp declaration info
     data = {"actionName": "dlytemperature",
             "tempDeclOn": get_date(),
             "declFrequency": get_period(),
