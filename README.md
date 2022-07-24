@@ -6,7 +6,7 @@ To get started, clone the respository within a terminal and move into the direct
 
 ```
 git clone https://github.com/irving11119/health-declaration-bot.git
-cd health_declaration_bot
+cd health-declaration-bot
 ```
 
 ## Required Packages
@@ -19,12 +19,28 @@ pip install -r requirements.txt
 
 ## Submitting Temperature Once
 
-Create a .env file in the same directory as health_declaration.py. Within the .env file, enter your NUS username credentials as well as password.
+Create a .env file in the same directory as health_declaration.py. Within the .env file, enter your NUS username credentials, password and the VAF Client ID of the page in question.
 
 To run the script once for sole temperature update, simply run the following command in terminal in the correseponding directory (For Linux/MacOS)
 
 ```bash
 python3 health_declaration.py
+```
+
+## Automating the Process
+
+Aternatively, we can handle automate our script to submit the temperature twice a day at the appropriate time periods. On Linux systems or Mac, we achieve this by using Cron and creating a cron job.
+
+To create a cron job, ensure you are running the terminal with root priviliges:
+
+```bash
+crontab -e
+```
+
+Ideally, we want to run our script once in the morning and once in the afternoon. We shall schedule our task to run at 0800 and 1400 everyday. We can do so using the following line:
+
+```bash
+0 8,14, * * * cd /path-to-directory/health-declaration-bot/ && python3 health_declaration.py
 ```
 
 ## Disclaimer

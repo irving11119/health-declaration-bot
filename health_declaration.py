@@ -1,5 +1,5 @@
 from datetime import datetime
-import requests as req
+import requests
 import sys
 from dotenv import load_dotenv
 import os
@@ -43,7 +43,7 @@ def login_to_page():
                   "UserName": USERNAME,
                   "Password": PASSWORD,
                   }
-    response = req.post(url=url, data=login_info, params=parameters)
+    response = requests.post(url=url, data=login_info, params=parameters)
 
     if response.status_code != 200 or "JSESSIONID" not in response.cookies:
         logging.error("Log in failed. Error Code:", response.status_code)
@@ -68,7 +68,7 @@ def submit_declaration(cookie):
             "symptomsFlag": "N",
             "familySymptomsFlag": "N"}
 
-    response = req.post(url=url, cookies=cookie, data=data)
+    response = requests.post(url=url, cookies=cookie, data=data)
 
     if response.status_code != 200:
         logging.error("Failed to declare temperature. HTTP Error Code:",
