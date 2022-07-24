@@ -3,10 +3,11 @@ import requests as req
 import sys
 from dotenv import load_dotenv
 import os
+import logging
 
 load_dotenv()
 
-USERNAME = os.getenv('USERNAME')
+USERNAME = "nusstu\\" + os.getenv('USERNAME')
 PASSWORD = os.getenv('PASSWORD')
 VAFS_CLIENT_ID = os.getenv('VAFS_CLIENT_ID')
 
@@ -30,7 +31,7 @@ def login_to_page():
     url = "https://vafs.nus.edu.sg/adfs/oauth2/authorize"
 
     # params for login page
-    params = {
+    parameters = {
         "response_type": "code",
         "client_id": VAFS_CLIENT_ID,
         "resource": "sg_edu_nus_oauth",
@@ -39,17 +40,17 @@ def login_to_page():
 
     # authentication info
     login_info = {"AuthMethod": "FormsAuthentication",
-                  "UserName": "nusstu\\" + USERNAME,
+                  "UserName": USERNAME,
                   "Password": PASSWORD,
                   }
-    response = req.post(url=url, data=login_info, params=params)
+    response = req.post(url=url, data=login_info, params=parameters)
 
     if response.status_code != 200 or "JSESSIONID" not in response.cookies:
-        print("Log in failed. Error Code:", response.status_code)
+        logging.error("Log in failed. Error Code:", response.status_code)
         sys.exit(1)
-    else:
-        print("Logged in successfully.")
-        return response.cookies["JSESSIONID"]
+
+    logging.info("Logged in successfully.")
+    return response.cookies["JSESSIONID"]
 
 
 def submit_declaration(cookie):
@@ -62,7 +63,7 @@ def submit_declaration(cookie):
 
     # temp declaration info
     data = {"actionName": "dlytemperature",
-            "tempDeclOn": get_date(),
+            "tempDeclOn": datetime.today().strftime("%d/%m/%Y"),
             "declFrequency": get_period(),
             "symptomsFlag": "N",
             "familySymptomsFlag": "N"}
@@ -70,13 +71,14 @@ def submit_declaration(cookie):
     response = req.post(url=url, cookies=cookie, data=data)
 
     if response.status_code != 200:
-        print("Failed to declare temperature. HTTP Error Code:",
-              response.status_code)
+        logging.error("Failed to declare temperature. HTTP Error Code:",
+                      response.status_code)
         sys.exit(1)
 
-    print("Submitted successfully.")
+    logging.info("Temperature Submitted.")
 
 
 if __name__ == "__main__":
-    submit_declaration(login_to_page())
+    current_session = login_to_page()
+    submit_declaration(current_session)
     sys.exit(0)
