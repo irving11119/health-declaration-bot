@@ -40,7 +40,7 @@ crontab -e
 Ideally, we want to run our script once in the morning and once in the afternoon. We shall schedule our task to run at 0800 and 1400 everyday. We can do so using the following line:
 
 ```bash
-0 8,14, * * * cd /path-to-directory/health-declaration-bot/ && python3 health_declaration.py
+0 8,14 * * * cd /path-to-directory/health-declaration-bot/ && python3 health_declaration.py
 ```
 
 ## Disclaimer
