@@ -47,7 +47,7 @@ Ideally, we want to run our script once in the morning and once in the afternoon
 
 This project was embarked upon and completed for educational purposes. I do not condone dishonest declaration of health information, both when health declaration was mandatory within NUS and now. Should the Covid-19 Pandemic evolve or the emergence of any other national health emergency result in NUS reinstating mandatory health declaration, this project should not be used as a form of circumventing University policy. This project and its code is strictly for educational purposes only.
 
-Temperature Declaration portal is now deprecated with Singapore and the Universities move towards living with Covid. However, this repo will remain up as a showcase of a personal project as well as for other looking to automate certain processes.
+Temperature Declaration portal is now deprecated with Singapore and the University's move towards living with Covid. However, this repo will remain up as a showcase of a personal project as well as for other looking to automate certain processes.
 
 This is not the only open source iteration of the project available. I claim no credit for the inception and originality of such an idea.
 
